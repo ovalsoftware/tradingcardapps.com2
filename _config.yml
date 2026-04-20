@@ -1,12 +1,10 @@
 # Site settings
 title: Trading Card App Ltd
 email: admin@tradingcardapps.com
-description: We are building the best Trading Card Apps in the World.
-baseurl: "" # the subpath of your site, e.g. /blog/
-url: "https://tradingcardapps.com" # the base hostname & protocol for your site
-
-twitter_username:
-github_username:
+description: We build TCG Companion — the modern app for trading card collectors.
+baseurl: ""
+url: "https://tradingcardapps.com"
+app_url: "https://tcgcompanion.app"
 
 # Build settings
 markdown: kramdown
