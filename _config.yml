@@ -1,10 +1,16 @@
 # Site settings
 title: Trading Card App Ltd
-email: admin@tradingcardapps.com
-description: We build TCG Companion — the modern app for trading card collectors.
+description: Trading Card App Ltd is a London studio making TCG Companion, the Pokémon card scanner and price tracker app.
 baseurl: ""
 url: "https://tradingcardapps.com"
-app_url: "https://tcgcompanion.app"
+app_url: "https://tcgcompanion.app/"
 
 # Build settings
 markdown: kramdown
+
+# Legal details shown on About and Privacy (from Companies House)
+company:
+  name: Trading Card App Ltd
+  number: "16105667"
+  registered_in: England and Wales
+  address: Suite 7, Second Floor, Apple Market Hub, 9 Crown Passage, Kingston Upon Thames, KT1 1JD, United Kingdom

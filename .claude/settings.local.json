@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ruby -v)",
+      "Bash(jekyll build *)",
+      "Bash(bundle exec *)",
+      "Bash(curl -s https://tradingcardapps.com/privacy/ -o /tmp/privacy.html -w \"HTTP %{http_code}\\\\n\")",
+      "Bash(curl -s https://tradingcardapps.com/about/ -o /tmp/about.html -w \"HTTP %{http_code}\\\\n\")",
+      "Bash(git -C /Users/rauno/Developer/tcgcompanion/tradingcardapps.com2 branch -a)",
+      "Bash(git -C /Users/rauno/Developer/tcgcompanion/tradingcardapps.com2 log --oneline -5 --all)",
+      "Bash(git *)"
+    ]
+  }
+}

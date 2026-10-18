@@ -1,19 +1,184 @@
 ---
 ---
 
-@charset "utf-8";
+:root {
+    --bg: #ffffff;
+    --text: #16171d;
+    --muted: #6b7280;
+    --line: #e7e8ec;
+    --accent: #4b3dd1;
+}
 
-// Brand palette
-$theme-primary: #6C5CE7;       // electric indigo
-$theme-primary-dark: #4B3DD1;
-$theme-accent: #FF7A59;        // warm coral accent
-$theme-dark: #0E0F1A;          // near-black with a violet undertone
-$theme-muted: #6B7280;
-$theme-bg: #FAFAFB;
-$theme-surface: #FFFFFF;
-$theme-border: rgba(14, 15, 26, 0.08);
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg: #111218;
+        --text: #ececf1;
+        --muted: #9ca0ad;
+        --line: #26282f;
+        --accent: #a29bfe;
+    }
+}
 
-@import
-        "mixins",
-        "base"
-;
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 17px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--accent); }
+
+.page {
+    max-width: 680px;
+    min-height: 100vh;
+    margin: 0 auto;
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.brand {
+    color: var(--text);
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.intro {
+    margin: auto 0;
+    padding: 64px 0;
+
+    h1 {
+        font-size: clamp(2rem, 6vw, 2.8rem);
+        line-height: 1.15;
+        letter-spacing: -0.02em;
+        margin: 0 0 20px;
+    }
+    p { font-size: 19px; margin: 0 0 28px; }
+}
+
+.button {
+    display: inline-block;
+    padding: 12px 22px;
+    border-radius: 999px;
+    background: var(--text);
+    color: var(--bg);
+    font-weight: 600;
+    text-decoration: none;
+    &:hover { background: var(--accent); }
+}
+
+.prose {
+    padding: 48px 0;
+
+    h1 { font-size: 2rem; letter-spacing: -0.02em; margin: 0 0 24px; }
+    p { margin: 0 0 18px; white-space: pre-line; }
+    hr { border: 0; border-top: 1px solid var(--line); margin: 28px 0; }
+}
+
+.footer {
+    margin-top: auto;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    color: var(--muted);
+    font-size: 14px;
+
+    nav { display: flex; flex-wrap: wrap; gap: 6px 20px; }
+    nav a, .link-button { color: var(--muted); text-decoration: none; &:hover { color: var(--text); } }
+    p { margin: 12px 0 0; }
+}
+
+.link-button {
+    padding: 0;
+    border: 0;
+    background: none;
+    font: inherit;
+    cursor: pointer;
+}
+
+// Contact form dialog, opened from the footer Contact link.
+.contact-dialog {
+    width: min(460px, calc(100vw - 32px));
+    margin: auto;
+    padding: 0;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.25);
+    color: var(--text);
+    background: var(--bg);
+
+    &::backdrop { background: rgba(0, 0, 0, 0.45); }
+
+    h2 { margin: 0 0 6px; font-size: 24px; letter-spacing: -0.01em; }
+}
+
+.contact-form, .contact-done { position: relative; padding: 28px 24px 24px; }
+.contact-form[hidden], .contact-done[hidden] { display: none; }
+
+.contact-lede { margin: 0 0 18px; color: var(--muted); font-size: 15px; }
+
+.contact-form label { display: block; margin: 0 0 6px; font-size: 14px; font-weight: 600; }
+
+.contact-form input, .contact-form textarea {
+    display: block;
+    width: 100%;
+    margin: 0 0 16px;
+    padding: 11px 14px;
+    font: inherit;
+    font-size: 16px;
+    color: var(--text);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--bg);
+    resize: vertical;
+
+    &:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 20%, transparent); }
+}
+
+.contact-form .contact-gotcha { position: absolute; left: -9999px; width: 1px; height: 1px; }
+
+.contact-send { width: 100%; border: 0; font: inherit; font-weight: 600; cursor: pointer; }
+.contact-send:disabled { opacity: 0.6; cursor: progress; }
+
+.contact-status:empty { display: none; }
+.contact-status { margin: 10px 0 0; font-size: 14px; color: var(--muted); text-align: center; }
+
+.contact-close {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 34px;
+    height: 34px;
+    border: 0;
+    border-radius: 50%;
+    background: var(--line);
+    color: var(--muted);
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.contact-done { text-align: center; }
+.contact-done p { color: var(--muted); margin: 0 0 18px; }
+.contact-done .button { border: 0; font: inherit; font-weight: 600; cursor: pointer; }
+
+.prose h2 { font-size: 1.3rem; margin: 40px 0 16px; }
+
+.company-details {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 8px 24px;
+    margin: 0;
+
+    dt { color: var(--muted); }
+    dd { margin: 0; }
+    .link-button { color: var(--accent); text-decoration: underline; }
+
+    @media (max-width: 520px) {
+        grid-template-columns: 1fr;
+        gap: 2px;
+        dd { margin-bottom: 12px; }
+    }
+}

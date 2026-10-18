@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% if page.title %}{{ page.title }} — {% endif %}{{ site.title }}</title>
+    <meta name="description" content="{{ page.description | default: site.description }}">
+    <link rel="canonical" href="{{ site.url }}{{ page.url | remove: 'index.html' }}">
+    <link rel="stylesheet" href="{{ '/css/main.css' | relative_url }}">
+</head>
+<body>
+    <main class="page">
+        <a class="brand" href="{{ '/' | relative_url }}">{{ site.title }}</a>
+        {{ content }}
+        <footer class="footer">
+            <nav>
+                <a href="{{ '/about' | relative_url }}">About</a>
+                <a href="{{ '/privacy' | relative_url }}">Privacy</a>
+                <button class="link-button" type="button" data-contact-open>Contact</button>
+            </nav>
+            <p>&copy; {{ 'now' | date: "%Y" }} {{ site.title }}. All rights reserved.</p>
+        </footer>
+    </main>
+
+    <dialog class="contact-dialog" id="contactDialog" aria-labelledby="contactTitle">
+        <form class="contact-form" action="https://formspree.io/f/mjygzpbr" method="POST">
+            <button class="contact-close" type="button" aria-label="Close" data-contact-close>&times;</button>
+            <h2 id="contactTitle">Contact us</h2>
+            <p class="contact-lede">Questions, feedback or app support - we'll reply by email.</p>
+            <label for="contactEmail">Your email</label>
+            <input id="contactEmail" type="email" name="email" autocomplete="email" required autofocus>
+            <label for="contactMessage">Your message</label>
+            <textarea id="contactMessage" name="message" rows="5" required></textarea>
+            <input type="hidden" name="_subject" value="Trading Card App Ltd website message">
+            <input class="contact-gotcha" type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true">
+            <button class="button contact-send" type="submit">Send</button>
+            <p class="contact-status" role="status"></p>
+        </form>
+        <div class="contact-done" hidden>
+            <h2>Thanks!</h2>
+            <p>Your message has been sent. We'll get back to you by email.</p>
+            <button class="button" type="button" data-contact-close>Close</button>
+        </div>
+    </dialog>
+    <script>
+        (function () {
+            var dialog = document.getElementById('contactDialog');
+            if (!dialog || typeof dialog.showModal !== 'function') return;
+            var form = dialog.querySelector('form');
+            var done = dialog.querySelector('.contact-done');
+            var status = dialog.querySelector('.contact-status');
+            var send = dialog.querySelector('.contact-send');
+
+            document.addEventListener('click', function (e) {
+                if (e.target.closest('[data-contact-open]')) {
+                    e.preventDefault();
+                    form.hidden = false;
+                    done.hidden = true;
+                    status.textContent = '';
+                    dialog.showModal();
+                } else if (e.target.closest('[data-contact-close]') || e.target === dialog) {
+                    dialog.close();
+                }
+            });
+
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+                send.disabled = true;
+                status.textContent = 'Sending...';
+                fetch(form.action, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } })
+                    .then(function (r) {
+                        if (!r.ok) throw new Error('HTTP ' + r.status);
+                        form.reset();
+                        form.hidden = true;
+                        done.hidden = false;
+                    })
+                    .catch(function () {
+                        status.textContent = 'Sorry, that didn\'t send. Please try again in a moment.';
+                    })
+                    .then(function () { send.disabled = false; });
+            });
+        })();
+    </script>
+</body>
+</html>
